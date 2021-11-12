@@ -1,0 +1,32 @@
+_schema-version: "3.2"
+ID: themedesigner
+version: 0.0.1
+modules:
+- name: themedesigner-approuter
+  type: approuter.nodejs
+  path: themedesigner-approuter
+  requires:
+  - name: themedesigner_html_repo_runtime
+  - name: uaa_themedesigner
+  - name: themedesigner-theming
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+resources:
+- name: themedesigner_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: uaa_themedesigner
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: themedesigner-xsuaa-service
+    service-plan: application
+- name: themedesigner-theming
+  parameters:
+   service: theming
+   service-plan: standard
+  type: org.cloudfoundry.managed-service
